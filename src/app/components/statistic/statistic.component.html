@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Statistic</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <p *ngIf="feedsNumber">Feeds number: {{feedsNumber}}</p>
+        <p *ngIf="itemsNumber">Items number: {{itemsNumber}}</p>
+        <p *ngIf="authorsNumber">Author number: {{authorsNumber}}</p>
+        <amexio-d3-chart-pie
+            *ngIf="chartData"
+            [label]="false"
+            [legend]="false"
+            [data]="chartData">
+        </amexio-d3-chart-pie>
+    </mat-card-content>
+</mat-card>

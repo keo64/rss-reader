@@ -1,0 +1,11 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Item info</mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content *ngIf="item">
+        <mat-card-title *ngIf="title" innerHTML={{title}}>{{title}}</mat-card-title>
+        <img *ngIf="image" mat-card-image src="{{image}}">
+        <p *ngIf="content" innerHTML={{content}}>{{content}}</p>
+    </mat-card-content>
+</mat-card>

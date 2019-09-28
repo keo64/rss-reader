@@ -1,0 +1,26 @@
+{
+  "feeds": [
+    { "slug": "fletcherpenney", "title": "Fletcherpenney", "url": "http://fletcherpenney.net/atom.xml", "feed": "atom" },
+    { "slug": "tsn", "title": "ТСН", "url": "https://tsn.ua/rss/full.rss", "feed": "rss"},
+    { "slug": "bbc_world_news", "title": "BBC World News", "url": "http://feeds.bbci.co.uk/news/world/rss.xml", "feed": "rss" },
+    { "slug": "washington_post", "title": "Washington Post", "url": "http://feeds.washingtonpost.com/rss/rss_blogpost", "feed": "rss" },
+    { "slug": "yahoo", "title": "Yahoo", "url": "https://www.yahoo.com/news/rss/world", "feed": "rss" },
+    { "slug": "cnn", "title": "CNN", "url": "http://rss.cnn.com/rss/edition_world.rss", "feed": "rss" },
+    { "slug": "ieee_spectrum", "title": "IEEE Spectrum", "url": "https://spectrum.ieee.org/rss/blog/tech-talk/fulltext", "feed": "rss" },
+    { "slug": "techworld", "title": "Techworld", "url": "https://www.techworld.com/news/rss", "feed": "rss" },
+    { "slug": "wired", "title": "Wired", "url": "https://www.wired.com/feed", "feed": "rss" },
+    { "slug": "new_york_times_technology", "title": "New York Times Technology", "url": "http://rss.nytimes.com/services/xml/rss/nyt/Technology.xml", "feed": "rss" },
+    { "slug": "npr_movies", "title": "NPR Movies", "url": "https://www.npr.org/rss/rss.php?slug=1045", "feed": "rss" },
+    { "slug": "fandango_new_movies", "title": "Fandango New Movies", "url": "https://www.fandango.com/rss/newmovies.rss", "feed": "rss" },
+    { "slug": "metacritic", "title": "Metacritic", "url": "http://www.metacritic.com/rss/movies", "feed": "rss" },
+    { "slug": "roger_ebert", "title": "Roger Ebert", "url": "https://www.rogerebert.com/feed", "feed": "atom" },
+    { "slug": "movies_movie_news", "title": "Movies Movie News", "url": "http://www.movies.com/rss-feeds/movie-news-rss", "feed": "rss" },
+    { "slug": "sports_illustrated", "title": "Sports Illustrated", "url": "http://www.si.com/rss/si_topstories.rss", "feed": "rss" },
+    { "slug": "new_york_times_sports", "title": "New York Times Sports", "url": "http://feeds1.nytimes.com/nyt/rss/Sports", "feed": "rss" },
+    { "slug": "talksport", "title": "TalkSport", "url": "https://talksport.com/rss/sports-news/all/feed", "feed": "rss" },
+    { "slug": "sport24_top_stories", "title": "Sport24 Top Stories", "url": "http://feeds.sport24.co.za/articles/Sport/Featured/TopStories/rss", "feed": "rss" },
+    { "slug": "cnn_sport", "title": "CNN Sport", "url": "http://rss.cnn.com/rss/edition_sport.rss", "feed": "rss" },
+    { "slug": "e!_News", "title": "E! News", "url": "http://syndication.eonline.com/syndication/feeds/rssfeeds/topstories.xml", "feed": "rss" },
+    { "slug": "npr", "title": "NPR", "url": "https://www.npr.org/rss/rss.php?id=1008", "feed": "rss" }
+  ]
+}

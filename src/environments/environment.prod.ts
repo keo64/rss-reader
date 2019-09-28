@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  feedListPath: './assets/feed-list.json'
 };
