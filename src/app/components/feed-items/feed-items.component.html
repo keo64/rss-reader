@@ -1,13 +1,13 @@
 <mat-card>
     <mat-card-header>
-      <mat-card-title>Channel Items</mat-card-title>
-      <mat-checkbox [(ngModel)]="isnotReaded">Show not readed items</mat-checkbox>
+      <mat-card-title>{{'feed.channel.items' | translate }}</mat-card-title>
+      <mat-checkbox [(ngModel)]="isnotReaded">{{'feed.checkbox.notReaded' | translate }}</mat-checkbox>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
         <mat-selection-list class="feed-list channel-items">
             <mat-list-option
-              *ngFor="let item of items | notReaded:isnotReaded"
+              *ngFor="let item of _feedService.feedItems | async | notReaded:isnotReaded"
               [ngClass]="{active: item.titlehash==titlehash}"
               (click)="onRowClick(item)">
               <div class="item-title" innerHTML={{item.title}}>{{item.title}}</div>

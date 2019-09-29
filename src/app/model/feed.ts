@@ -5,6 +5,13 @@ export class LocalFeed {
   title: string;
   url:   string;
   feed: string;
+
+  constructor(feed:any) {
+    this.slug  = feed.slug;
+    this.title = feed.title;
+    this.url   = feed.url;
+    this.feed  = feed.feed;
+  }
 }
 
 export class Feed {

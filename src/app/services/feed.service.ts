@@ -1,90 +1,113 @@
-import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
-import { HttpClient } from '@angular/common/http';
+import * as xml2js         from 'xml2js';
+import { List }            from 'immutable';
+import { Injectable }      from '@angular/core';
+import { LocalFeed, Feed } from '../model/feed';
+import { FeedEntry }       from '../model/feed-entry';
+import { HttpClient }      from '@angular/common/http';
+import { TitlehashPipe }   from '../pipes/titlehash.pipe';
+import { environment }     from '../../environments/environment';
 import { Observable, BehaviorSubject } from 'rxjs';
-// import { BehaviorSubject } from "rxjs/Rx";
-// import {Subject} from "rxjs/Subject";
-import { map } from 'rxjs/operators';
-import * as xml2js from 'xml2js';
-import { LocalFeed, Feed, FeedInfo } from '../model/feed';
-import { environment } from '../../environments/environment';
-import { FeedEntry } from '../model/feed-entry';
-import { TitlehashPipe } from '../pipes/titlehash.pipe';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class FeedService {
   feedListPath = environment.feedListPath;
-  localFeeds: Observable<LocalFeed[]>;
-  feedItems: Observable<Feed>;
-  localFeedObserv: BehaviorSubject<LocalFeed> = new BehaviorSubject(new LocalFeed());
-  feedItemObserv: BehaviorSubject<FeedEntry> = new BehaviorSubject(new FeedEntry());
+  private _localFeeds: BehaviorSubject<List<LocalFeed>> =
+    new BehaviorSubject(List([]));
+  private _feedItems: BehaviorSubject<Feed> =
+    new BehaviorSubject(new Feed());
+  private _localFeed: BehaviorSubject<LocalFeed> =
+    new BehaviorSubject(new LocalFeed({}));
+  private _feedItem: BehaviorSubject<FeedEntry> =
+    new BehaviorSubject(new FeedEntry());
+
+  readonly proxyUrl = 'https://cors-anywhere.herokuapp.com';
 
   constructor(
-    private _http: HttpClient,
-    private _titlehash: TitlehashPipe) { }
+    private _http:      HttpClient,
+    private _titlehash: TitlehashPipe) {}
 
-  initLocalFeeds(): Observable<LocalFeed[]> {      
-      this.localFeeds = this._http.get(this.feedListPath).pipe(map(data=>{
-          let feeds = data["feeds"];
+  get localFeeds():Observable<List<LocalFeed>> {
+    return new Observable(fn => this._localFeeds.subscribe(fn));
+  }
+
+  get feedItems():Observable<Feed> {
+    return new Observable(fn => this._feedItems.subscribe(fn));
+  }
+
+  initLocalFeeds() {
+    this._http.get(this.feedListPath)
+      .subscribe(
+        res => {
+          let feeds = res["feeds"];
           let dataFeeds = feeds.map(function(feed:any) {
-            return feed;
+            return new LocalFeed(feed);
           });
           let localFeeds = JSON.parse(localStorage.getItem('localFeeds'));
 
           if(localFeeds) {
             for (let index = localFeeds.length - 1; index == 0; index--) {
               const localFeed = localFeeds[index];
-              dataFeeds.unshift(localFeed);
+              dataFeeds.unshift(new LocalFeed(localFeed));
             }
           }
 
-          return dataFeeds;
-      }));
-
-      return this.localFeeds;
+          this._localFeeds.next(List(dataFeeds));
+        },
+        err => console.log("Error retrieving local feeds")
+    );
   }
 
-  getLocalFeeds(): Observable<LocalFeed[]> {
-    return this.localFeeds;
+  addLocalFeed(localFeed: any) {
+    const newLocalFeed = new LocalFeed(localFeed);
+    this._localFeeds.next(this._localFeeds.getValue().unshift(newLocalFeed));
+
+    addLocalFeedToStorage(newLocalFeed);
+
+    function addLocalFeedToStorage(localFeed: LocalFeed) {
+      let localFeeds = JSON.parse(localStorage.getItem('localFeeds'));
+      if(localFeeds) {
+        localFeeds.unshift(localFeed);
+      } else {
+        localFeeds = [localFeed];
+      }
+      localStorage.setItem('localFeeds',  JSON.stringify(localFeeds));
+    }
   }
 
-  getFeedBySlug(slug):Observable<LocalFeed> {
-    this.getLocalFeeds().subscribe(
+  getFeedBySlug(slug: string):Observable<LocalFeed> {
+    this._localFeeds.subscribe(
       data => {
-        this.localFeedObserv.next(data.find(f => f.slug == slug));
+        this._localFeed.next(data.find(f => f.slug == slug));
       });
 
-    return this.localFeedObserv;
+    return this._localFeed;
   }
 
-  getFeedItems(): Observable<Feed> {
-    return this.feedItems;
-  }
-
-  getFeedItemsByUrl(url: string): Observable<Feed> {
-    const _that = this;
-
-    this.feedItems = this._http.get('https://cors-anywhere.herokuapp.com/' + url, {responseType: 'text'})
-      .pipe(map(this.parseFeedItem.bind(this)));
-
-    return this.feedItems;
-  }
-
-  getFeedByTitleHash(titlehash):Observable<FeedEntry> {
-    const items = this.getFeedItems();
-    if(items) {
-      items.subscribe(
+  getFeedItemsByUrl(url: string) {
+    this._http.get(this.proxyUrl + '/' + url, { responseType: 'text' })
+      .subscribe(
         data => {
-          this.feedItemObserv.next(data.feed.channel.find(f => f.titlehash == titlehash));
-        });
-    } else {
-      setTimeout(this.getFeedByTitleHash.bind(this, titlehash), 500);
-    }
+          let dataFeed: Feed = this.parseFeedItem(data);
+          this._feedItems.next(dataFeed);
+        },
+        err => console.log("Error retrieving feed items")
+    );
 
-    return this.feedItemObserv;
+    return this._feedItems;
+  }
+
+  getFeedByTitleHash(titlehash: string) {
+    this._feedItems.subscribe(
+      data => {
+        if(data && data.feed) {
+          this._feedItem
+            .next(data.feed.channel.find(f => f.titlehash == titlehash));
+        }
+      });
+
+    return this._feedItem;
   }
 
   private parseFeedItem(response: any): Feed {
@@ -104,7 +127,9 @@ export class FeedService {
 
       let
         resultFeed:any = result.rss || result.feed,
-        resultFeedChannelItems:any = (resultFeed.channel && resultFeed.channel.item) || resultFeed.entry,
+        resultFeedChannelItems:any =
+          (resultFeed.channel && resultFeed.channel.item) ||
+          resultFeed.entry,
         authorList:any = [];
 
       if(resultFeed.author) {
@@ -127,10 +152,7 @@ export class FeedService {
       feed.feed = resultFeed;
       feed.feed.authors = authorList;
       feed.feed.channel = resultFeedChannelItems;
-
-      // feed = result;
     });
-
 
     return feed;
   }

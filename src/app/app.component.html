@@ -1,11 +1,15 @@
 <amexio-layout-grid [layout]="'LayoutRssReader'">
   <amexio-grid-item [name]="'gridheader'">
     <mat-toolbar class="navbar">
-        <div>{{title}}</div>
+        <div>{{'app.title' | translate }}</div>
         <div>
-          <span>111</span>
-          <span>222</span>
-          <span>333</span>
+           <mat-form-field>
+              <mat-select [(ngModel)]="selectedLanguage" (ngModelChange)="selectLanguage()">
+                <mat-option *ngFor="let lang of languages" [value]="lang.key">
+                    {{lang.value}}
+                </mat-option>
+              </mat-select>
+          </mat-form-field>
         </div>
     </mat-toolbar>
   </amexio-grid-item>
@@ -13,18 +17,20 @@
   <amexio-grid-item [name]="'gridchannels'">
       <mat-card>
           <mat-card-header>
-            <mat-card-title>Feed List</mat-card-title>
-            <div>
-                <input matInput placeholder="Feed Title" name="feedTitle" [(ngModel)]="feedTitle">
-                <input matInput placeholder="Feed Url" name="feedUrl" [(ngModel)]="feedUrl">
-              <button mat-button (click)="addFeedUrl(feedTitle, feedUrl)">ADD</button>
+            <mat-card-title>{{'feed.list' | translate }}</mat-card-title>
+            <div class="add-feed-url">
+                <input matInput placeholder="{{'feed.placeholder.feedTitle' | translate }}" name="feedTitle" [(ngModel)]="feedTitle">
+                <input matInput placeholder="{{'feed.placeholder.feedUrl' | translate }}" name="feedUrl" [(ngModel)]="feedUrl">
+                <button mat-button (click)="addFeedUrl(feedTitle, feedUrl)">
+                    {{'feed.btn.add' | translate }}
+                </button>
             </div>
           </mat-card-header>
           <mat-divider></mat-divider>
           <mat-card-content>
               <mat-selection-list class="feed-list">
                   <mat-list-option
-                    *ngFor="let feed of localFeeds"
+                    *ngFor="let feed of _feedService.localFeeds | async"
                     [ngClass]="{active: feed.slug==slug}"
                     (click)="onRowClick(feed)">
                     <div class="feed-title">{{feed.title}}</div>

@@ -1,0 +1,30 @@
+{
+    "app": {
+        "title": "Rss Reader"
+    },
+    "feed": {
+        "list": "Liste de flux",
+        "channel": {
+            "items": "Éléments de la chaîne"
+        },
+        "item": {
+            "info": "Informations sur l'article"
+        },
+        "btn": {
+            "add": "Ajouter"
+        },
+        "checkbox": {
+            "notReaded": "Afficher les éléments non lus"
+        },
+        "placeholder": {
+            "feedTitle": "Titre du fil",
+            "feedUrl": "Chemin d'alimentation"
+        },
+        "statistic": {
+            "title": "Statistique",
+            "feedsNumber": "Nombre de flux",
+            "itemsNumber": "Nombre d'articles",
+            "authorNumber": "Numéro de l'auteur"
+        }
+    }
+}

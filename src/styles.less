@@ -21,17 +21,35 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .griditemcontainer .mat-card,
 .griditemcontainer .mat-card-content {
   height: ~"calc(100% - 36px)";
+  overflow: hidden;
 }
 .griditemcontainer .mat-card-content {
   overflow-y: scroll;
 }
+
+.mat-select-panel {
+  .mat-option.mat-active {
+    &:not(.mat-option-multiple) {
+      color: rgba(0,0,0,.87);
+    }
+  }
+}
+
 .mat-card-header {
   justify-content: space-between;
+  align-items: baseline;
+
+  .add-feed-url {
+    display: flex;
+  }
 }
 .mat-card-content {
   .feed-list {
     .mat-list-item,
     .mat-list-option {
+      padding: 10px 0;
+      height: 100%;
+
       &.active {
         background: rgba(0,0,0,.04);
       }
@@ -89,6 +107,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .griditem,
   .gridstatistic {
     overflow-y: scroll;
+  }
+
+  .griditem,
+  .gridstatistic {
+    .mat-card-content {
+      padding-top: 10px;
+    }
   }
 
   .listbox .list .list-items {

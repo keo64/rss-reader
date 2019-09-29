@@ -23,26 +23,17 @@ const routes: Routes = [
     component: StatisticComponent,
     outlet:    "itemStatistic"
   },
-  // { path: 'feed/:slug/:itemSlug', component: FeedItemComponent,  outlet: "itemInfo" }
-  { path: 'en', redirectTo: '' }, // because english language is the default one
-
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, {
-      paramsInheritanceStrategy: 'always'
-      // initialNavigation: 'enabled',
-      // scrollPositionRestoration: 'enabled',
-      // anchorScrolling: 'enabled'
-    })
+    RouterModule.forRoot(routes)
   ],
   exports: [
     RouterModule
   ]
 })
 
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

@@ -1,12 +1,12 @@
 <mat-card>
     <mat-card-header>
-        <mat-card-title>Statistic</mat-card-title>
+        <mat-card-title>{{'feed.statistic.title' | translate }}</mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-        <p *ngIf="feedsNumber">Feeds number: {{feedsNumber}}</p>
-        <p *ngIf="itemsNumber">Items number: {{itemsNumber}}</p>
-        <p *ngIf="authorsNumber">Author number: {{authorsNumber}}</p>
+        <p *ngIf="feedsNumber">{{'feed.statistic.feedsNumber' | translate }}: {{feedsNumber}}</p>
+        <p *ngIf="itemsNumber">{{'feed.statistic.itemsNumber' | translate }}: {{itemsNumber}}</p>
+        <p *ngIf="authorsNumber">{{'feed.statistic.authorNumber' | translate }}: {{authorsNumber}}</p>
         <amexio-d3-chart-pie
             *ngIf="chartData"
             [label]="false"

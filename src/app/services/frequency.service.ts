@@ -32,8 +32,6 @@ export class FrequencyService {
         Number((freq[character].count / strLength * 100).toFixed(2));
     }
 
-    // char
-
     result = Object.keys(freq).map(function(key) {
       return [key, freq[key].percent];
     });

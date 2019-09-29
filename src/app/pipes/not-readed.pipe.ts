@@ -5,10 +5,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class NotReadedPipe implements PipeTransform {
 
-  transform(items: any[], filter: Object): any {
-    if(!items) return [];
+  transform(items: any, filter: Object): any {
+    if(!items || items && !items.feed) return [];
 
-    return items.filter( it => {
+    return items.feed.channel.filter( it => {
       return filter ? !it.readed : true;
     });
   }

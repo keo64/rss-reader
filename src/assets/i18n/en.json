@@ -1,0 +1,30 @@
+{
+    "app": {
+      "title": "Rss Reader"
+    },
+    "feed": {
+        "list": "Feed List",
+        "channel": {
+            "items": "Channel Items"
+        },
+        "item": {
+            "info": "Item info"
+        },
+        "btn": {
+            "add": "ADD"
+        },
+        "checkbox": {
+            "notReaded":"Show not readed items"
+        },
+        "placeholder": {
+            "feedTitle": "Feed Title",
+            "feedUrl": "Feed Url"
+        },
+        "statistic": {
+            "title": "Statistic",
+            "feedsNumber": "Feeds number",
+            "itemsNumber": "Items number",
+            "authorNumber": "Author number"
+        }
+    }
+}

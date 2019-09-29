@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { FeedEntry } from '../../model/feed-entry';
-import { FeedService } from '../../services/feed.service';
+import { ActivatedRoute }    from '@angular/router';
+import { FeedEntry }         from '../../model/feed-entry';
+import { FeedService }       from '../../services/feed.service';
 
 @Component({
-  selector: 'app-feed-item',
+  selector:    'app-feed-item',
   templateUrl: './feed-item.component.html',
-  styleUrls: ['./feed-item.component.less']
+  styleUrls:   ['./feed-item.component.less']
 })
 export class FeedItemComponent implements OnInit {
-  item: FeedEntry;
-  image: string;
+  item:    FeedEntry;
+  image:   string;
   content: string;
-  title: string;
+  title:   string;
 
   constructor(
     private _activateRoute: ActivatedRoute,
@@ -23,23 +23,23 @@ export class FeedItemComponent implements OnInit {
       const item: any = history.state.data;
 
       if(item) {
-        this.item = item;
-        this.title = item.title;
-        this.image = item.enclosure && item.enclosure.url;
-        this.content = item.content;
+        this.setfeedItemContent(item);
       } else {
-        const _that = this;
-
         const titlehash: string = routeParams.feedSlug;
-        _that._feedService.getFeedByTitleHash(titlehash).subscribe(data=> {
-          if(data) {
-            _that.item = data;
-            _that.title = data.title;
-            _that.image = data.enclosure && data.enclosure.url;
-            _that.content = data.content;
-          }
+
+        this._feedService.getFeedByTitleHash(titlehash).subscribe(data=> {
+          this.setfeedItemContent(data);
         });
       }
     });
+  }
+
+  setfeedItemContent(item: any) {
+    if(item && item.content) {
+      this.item = item;
+      this.title = item.title;
+      this.image = item.enclosure && item.enclosure.url;
+      this.content = item.content;
+    }
   }
 }

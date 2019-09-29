@@ -1,0 +1,30 @@
+{
+    "app": {
+        "title": "Переглядач Rss"
+    },
+    "feed": {
+        "list": "Список каналів",
+        "channel": {
+            "items": "Список сповіщень"
+        },
+        "item": {
+            "info": "Інфо сповіщення"
+        },
+        "btn": {
+            "add": "Додати"
+        },
+        "checkbox": {
+            "notReaded": "Не прочитані"
+        },
+        "placeholder": {
+            "feedTitle": "Заголовок",
+            "feedUrl": "Шлях"
+        },
+        "statistic": {
+            "title": "Статистика",
+            "feedsNumber": "Кількість каналів",
+            "itemsNumber": "Кількість сповіщень",
+            "authorNumber": "Кількість авторів"
+        }
+    }
+}

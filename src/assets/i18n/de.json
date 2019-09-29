@@ -1,0 +1,30 @@
+{
+    "app": {
+        "title": "RSS-Reader"
+    },
+    "feed": {
+        "list": "Feed-Liste",
+        "channel": {
+            "items": "Channel Items"
+        },
+        "item": {
+            "info": "Artikelinfo"
+        },
+        "btn": {
+            "add": "Hinzufügen"
+        },
+        "checkbox": {
+            "notReaded": "Nicht gelesene Artikel anzeigen"
+        },
+        "placeholder": {
+            "feedTitle": "Titel des Feeds",
+            "feedUrl": "Vorschubweg"
+        },
+        "statistic": {
+            "title": "Statistik",
+            "feedsNumber": "Feeds Nummer",
+            "itemsNumber": "Artikelnummer",
+            "authorNumber": "Autorennummer"
+        }
+    }
+}
